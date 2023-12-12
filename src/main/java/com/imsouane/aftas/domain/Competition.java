@@ -24,11 +24,14 @@ public class Competition {
     @NotBlank
     @Pattern(regexp = "^[a-z]{3}-[0-9]{2}-[0-9]{2}-[0-9]{2}$", message = "Code must be in the format of sss-dd-mm-yy")
     private String code;
-    @NotBlank
+    @NotNull
+    @Temporal(TemporalType.DATE)
     private LocalDate date;
-    @NotBlank
+    @NotNull
+    @Temporal(TemporalType.TIME)
     private LocalTime startTime;
-    @NotBlank
+    @NotNull
+    @Temporal(TemporalType.TIME)
     private LocalTime endTime;
     @NotNull
     private Integer numberOfParticipants;
