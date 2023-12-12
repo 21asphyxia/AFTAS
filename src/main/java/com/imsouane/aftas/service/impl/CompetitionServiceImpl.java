@@ -2,9 +2,8 @@ package com.imsouane.aftas.service.impl;
 
 import com.imsouane.aftas.domain.Competition;
 import com.imsouane.aftas.exception.CompetitionCreationException;
+import com.imsouane.aftas.exception.ResourceNotFoundException;
 import com.imsouane.aftas.repository.CompetitionRepository;
-import com.imsouane.aftas.service.dto.competitionDTO.CompetitionCreationRequestDto;
-import com.imsouane.aftas.service.dto.competitionDTO.CompetitionResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,18 +17,13 @@ import java.util.Optional;
 public class CompetitionServiceImpl {
     private final CompetitionRepository competitionRepository;
 
-    public CompetitionResponseDto save(CompetitionCreationRequestDto competition) {
-        Competition toCreateCompetition = CompetitionCreationRequestDto.toCompetition(competition);
-        Competition existingCompetition = competitionRepository.findByDate(toCreateCompetition.getDate())
-                .orElse(null);
-        if (existingCompetition != null) {
-            throw new CompetitionCreationException("Competition already exists for this date");
-        }
-        return CompetitionResponseDto.fromCompetition(competitionRepository.save(toCreateCompetition));
+    public Competition save(Competition competition) {
+        competitionRepository.findByDate(competition.getDate()).orElseThrow(() -> new CompetitionCreationException("Competition already exists for this date"));
+        return competitionRepository.save(competition);
     }
 
-    public List<CompetitionResponseDto> findAll() {
-        return CompetitionResponseDto.fromCompetitions(competitionRepository.findAll());
+    public List<Competition> findAll() {
+        return competitionRepository.findAll();
     }
 
     public Optional<Competition> findById(Long id) {
@@ -44,4 +38,7 @@ public class CompetitionServiceImpl {
         return competitionRepository.findAll(pageable);
     }
 
+    public Competition findByCode(String code) {
+        return competitionRepository.findByCodeLikeIgnoreCase(code).orElseThrow(() -> new ResourceNotFoundException("Competition not found with code: " + code));
+    }
 }

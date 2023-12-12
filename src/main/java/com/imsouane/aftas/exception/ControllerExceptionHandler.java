@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +34,14 @@ public class ControllerExceptionHandler {
         return ResponseEntity.badRequest().body(errors);
     }
 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorMessage> handleResourceNotFoundException(ResourceNotFoundException e) {
+        ErrorMessage errorMessage = new ErrorMessage(
+                LocalDateTime.now(),
+                e.getMessage()
+        );
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessage> handleException(Exception e, WebRequest request) {
