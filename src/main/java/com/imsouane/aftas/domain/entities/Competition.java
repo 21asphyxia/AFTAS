@@ -1,4 +1,4 @@
-package com.imsouane.aftas.domain;
+package com.imsouane.aftas.domain.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -19,9 +19,6 @@ import java.util.List;
 @Builder
 public class Competition {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @NotBlank
     @Pattern(regexp = "^[a-z]{3}-[0-9]{2}-[0-9]{2}-[0-9]{2}$", message = "Code must be in the format of sss-dd-mm-yy")
     private String code;
     @NotNull

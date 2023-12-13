@@ -1,6 +1,6 @@
 package com.imsouane.aftas.web.rest;
 
-import com.imsouane.aftas.domain.Fish;
+import com.imsouane.aftas.domain.entities.Fish;
 import com.imsouane.aftas.service.dto.fishDTO.FishCreationRequestDto;
 import com.imsouane.aftas.service.dto.fishDTO.FishResponseDto;
 import com.imsouane.aftas.service.impl.FishServiceImpl;

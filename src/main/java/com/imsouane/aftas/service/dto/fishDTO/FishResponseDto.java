@@ -1,6 +1,6 @@
 package com.imsouane.aftas.service.dto.fishDTO;
 
-import com.imsouane.aftas.domain.Fish;
+import com.imsouane.aftas.domain.entities.Fish;
 import lombok.Builder;
 
 @Builder

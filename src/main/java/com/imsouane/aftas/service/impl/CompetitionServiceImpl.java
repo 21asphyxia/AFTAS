@@ -1,24 +1,28 @@
 package com.imsouane.aftas.service.impl;
 
-import com.imsouane.aftas.domain.Competition;
+import com.imsouane.aftas.domain.entities.Competition;
 import com.imsouane.aftas.exception.CompetitionCreationException;
 import com.imsouane.aftas.exception.ResourceNotFoundException;
 import com.imsouane.aftas.repository.CompetitionRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CompetitionServiceImpl {
     private final CompetitionRepository competitionRepository;
 
-    public Competition save(Competition competition) {
-        competitionRepository.findByDate(competition.getDate()).orElseThrow(() -> new CompetitionCreationException("Competition already exists for this date"));
+    public Competition save(@Valid Competition competition) {
+        competitionRepository.findByDate(competition.getDate()).ifPresent((c) -> {
+            throw new CompetitionCreationException("Competition already exists with date: " + competition.getDate());
+        });
+        competition.setCode(generateCode(competition.getLocation().toLowerCase(), competition.getDate()));
         return competitionRepository.save(competition);
     }
 
@@ -26,8 +30,8 @@ public class CompetitionServiceImpl {
         return competitionRepository.findAll();
     }
 
-    public Optional<Competition> findById(Long id) {
-        return competitionRepository.findById(id);
+    public Competition findByCode(String code) {
+        return competitionRepository.findByCodeLikeIgnoreCase(code).orElseThrow(() -> new ResourceNotFoundException("Competition not found with code: " + code));
     }
 
     public void delete(Competition competition) {
@@ -38,7 +42,7 @@ public class CompetitionServiceImpl {
         return competitionRepository.findAll(pageable);
     }
 
-    public Competition findByCode(String code) {
-        return competitionRepository.findByCodeLikeIgnoreCase(code).orElseThrow(() -> new ResourceNotFoundException("Competition not found with code: " + code));
+    private String generateCode(String location, LocalDate date) {
+        return location.substring(0, 3) + "-" + date.getDayOfMonth() + "-" + date.getMonthValue() + "-" + String.valueOf(date.getYear()).substring(2);
     }
 }

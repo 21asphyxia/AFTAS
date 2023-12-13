@@ -1,10 +1,9 @@
 package com.imsouane.aftas.web.rest;
 
-import com.imsouane.aftas.domain.Competition;
+import com.imsouane.aftas.domain.entities.Competition;
 import com.imsouane.aftas.service.dto.competitionDTO.CompetitionCreationRequestDto;
 import com.imsouane.aftas.service.impl.CompetitionServiceImpl;
 import jakarta.validation.Valid;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

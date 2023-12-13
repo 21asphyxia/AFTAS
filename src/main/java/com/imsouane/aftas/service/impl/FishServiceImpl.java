@@ -1,6 +1,6 @@
 package com.imsouane.aftas.service.impl;
 
-import com.imsouane.aftas.domain.Fish;
+import com.imsouane.aftas.domain.entities.Fish;
 import com.imsouane.aftas.exception.ResourceNotFoundException;
 import com.imsouane.aftas.repository.FishRepository;
 import lombok.RequiredArgsConstructor;

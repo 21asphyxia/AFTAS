@@ -1,4 +1,4 @@
-package com.imsouane.aftas.domain;
+package com.imsouane.aftas.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,13 +10,12 @@ import lombok.*;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
-public class Ranking {
+public class Fish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    private Double averageWeight;
     @ManyToOne
-    private Member member;
-    @ManyToOne
-    private Competition competition;
-
+    private Level level;
 }

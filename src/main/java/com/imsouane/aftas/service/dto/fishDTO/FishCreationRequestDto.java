@@ -1,7 +1,7 @@
 package com.imsouane.aftas.service.dto.fishDTO;
 
-import com.imsouane.aftas.domain.Fish;
-import com.imsouane.aftas.domain.Level;
+import com.imsouane.aftas.domain.entities.Fish;
+import com.imsouane.aftas.domain.entities.Level;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 

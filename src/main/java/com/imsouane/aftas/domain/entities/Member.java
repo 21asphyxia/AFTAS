@@ -1,4 +1,4 @@
-package com.imsouane.aftas.domain;
+package com.imsouane.aftas.domain.entities;
 
 import com.imsouane.aftas.domain.enums.IdentityDocumentType;
 import jakarta.persistence.*;
