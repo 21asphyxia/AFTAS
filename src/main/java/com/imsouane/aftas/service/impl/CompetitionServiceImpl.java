@@ -6,7 +6,6 @@ import com.imsouane.aftas.exception.ResourceNotFoundException;
 import com.imsouane.aftas.repository.CompetitionRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +17,10 @@ import java.util.List;
 public class CompetitionServiceImpl {
     private final CompetitionRepository competitionRepository;
 
+    public List<Competition> findAll(Pageable pageable) {
+        return competitionRepository.findAllByOrderByDateDesc(pageable);
+    }
+
     public Competition save(@Valid Competition competition) {
         competitionRepository.findByDate(competition.getDate()).ifPresent((c) -> {
             throw new CompetitionCreationException("Competition already exists with date: " + competition.getDate());
@@ -26,20 +29,12 @@ public class CompetitionServiceImpl {
         return competitionRepository.save(competition);
     }
 
-    public List<Competition> findAll() {
-        return competitionRepository.findAll();
-    }
-
     public Competition findByCode(String code) {
         return competitionRepository.findByCodeLikeIgnoreCase(code).orElseThrow(() -> new ResourceNotFoundException("Competition not found with code: " + code));
     }
 
     public void delete(Competition competition) {
         competitionRepository.delete(competition);
-    }
-
-    public Page<Competition> findAll(Pageable pageable) {
-        return competitionRepository.findAll(pageable);
     }
 
     private String generateCode(String location, LocalDate date) {
