@@ -1,13 +1,22 @@
 package com.imsouane.aftas.service.dto.competitionDTO;
 
 import com.imsouane.aftas.domain.entities.Competition;
+import lombok.Builder;
 
 import java.util.List;
 
+@Builder
 public record CompetitionResponseDto(String code, String date, String startTime, String endTime,
                                      Integer numberOfParticipants, String location) {
     public static CompetitionResponseDto fromCompetition(Competition competition) {
-        return new CompetitionResponseDto(competition.getCode(), competition.getDate().toString(), competition.getStartTime().toString(), competition.getEndTime().toString(), competition.getNumberOfParticipants(), competition.getLocation());
+        return CompetitionResponseDto.builder()
+                .code(competition.getCode())
+                .date(competition.getDate().toString())
+                .startTime(competition.getStartTime().toString())
+                .endTime(competition.getEndTime().toString())
+                .numberOfParticipants(competition.getNumberOfParticipants())
+                .location(competition.getLocation())
+                .build();
     }
 
     public static List<CompetitionResponseDto> fromCompetitions(List<Competition> competitions) {

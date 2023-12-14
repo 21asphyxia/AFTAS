@@ -23,8 +23,8 @@ public class MemberServiceImpl {
         return memberRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Member not found with id: " + id));
     }
 
-    public Optional<Member> findByNum(Integer num) {
-        return memberRepository.findByNum(num);
+    public Member findByNum(Integer num) {
+        return memberRepository.findByNum(num).orElseThrow(() -> new ResourceNotFoundException("Member not found with num: " + num));
     }
 
     public void deleteById(Long id) {

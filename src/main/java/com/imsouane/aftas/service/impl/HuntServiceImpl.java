@@ -9,6 +9,8 @@ import com.imsouane.aftas.repository.HuntRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 @RequiredArgsConstructor
 public class HuntServiceImpl {
@@ -21,6 +23,9 @@ public class HuntServiceImpl {
         Fish fish = fishService.findById(hunt.getFish().getId());
         Member member = memberService.findById(hunt.getMember().getId());
         Competition competition = competitionService.findByCode(hunt.getCompetition().getCode());
+        if (competition.getDate().isEqual(LocalDate.now())) {
+            throw new HuntCreationException("Hunts can only be registered on the day of the competition");
+        }
         if (fish.getAverageWeight() <= weight) {
             Hunt hunt1 = huntRepository.findByCompetitionAndFishAndMember(competition, fish, member).orElse(null);
             if (hunt1 == null) {
@@ -37,5 +42,9 @@ public class HuntServiceImpl {
         } else {
             throw new HuntCreationException("Weight is less than average weight");
         }
+    }
+
+    public Hunt findById(Long id) {
+        return huntRepository.findById(id).orElseThrow(() -> new HuntCreationException("Hunt not found"));
     }
 }

@@ -15,11 +15,29 @@ import java.util.Map;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
-    @ExceptionHandler(CompetitionCreationException.class)
+    @ExceptionHandler({CompetitionCreationException.class,})
     public ResponseEntity<ErrorMessage> handleCompetitionCreationException(CompetitionCreationException e) {
         ErrorMessage errorMessage = new ErrorMessage(
                 LocalDateTime.now(),
                 e.getMessage()
+        );
+        return ResponseEntity.badRequest().body(errorMessage);
+    }
+
+    @ExceptionHandler(HuntCreationException.class)
+    public ResponseEntity<ErrorMessage> handleHuntCreationException(HuntCreationException e) {
+        ErrorMessage errorMessage = new ErrorMessage(
+                LocalDateTime.now(),
+                e.getMessage()
+        );
+        return ResponseEntity.badRequest().body(errorMessage);
+    }
+
+    @ExceptionHandler(DateTimeParseException.class)
+    public ResponseEntity<ErrorMessage> handleDateTimeParseException(DateTimeParseException e) {
+        ErrorMessage errorMessage = new ErrorMessage(
+                LocalDateTime.now(),
+                e.getCause().toString()
         );
         return ResponseEntity.badRequest().body(errorMessage);
     }
@@ -33,24 +51,6 @@ public class ControllerExceptionHandler {
             errors.put(fieldName, errorMessage);
         });
         return ResponseEntity.badRequest().body(errors);
-    }
-
-    @ExceptionHandler(HuntCreationException.class)
-    public ResponseEntity<ErrorMessage> handleHuntCreationException(HuntCreationException e) {
-        ErrorMessage errorMessage = new ErrorMessage(
-                LocalDateTime.now(),
-                e.getMessage()
-        );
-        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(DateTimeParseException.class)
-    public ResponseEntity<ErrorMessage> handleDateTimeParseException(DateTimeParseException e) {
-        ErrorMessage errorMessage = new ErrorMessage(
-                LocalDateTime.now(),
-                e.getCause().toString()
-        );
-        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
