@@ -3,6 +3,7 @@ package com.imsouane.aftas.domain.entities;
 import com.imsouane.aftas.domain.entities.embeddable.RankId;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
@@ -22,7 +23,9 @@ public class Ranking {
     @JoinColumn(name = "competition_code")
     @MapsId("competitionCode")
     private Competition competition;
+    @ColumnDefault("0")
     private Integer rank;
+    @ColumnDefault("0")
     private Integer score;
 
 }

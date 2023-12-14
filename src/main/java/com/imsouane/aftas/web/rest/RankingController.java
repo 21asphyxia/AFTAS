@@ -1,13 +1,11 @@
 package com.imsouane.aftas.web.rest;
 
 import com.imsouane.aftas.service.dto.rankingDTO.RankingResponseDto;
+import com.imsouane.aftas.service.dto.rankingDTO.RegistrationRequestDto;
 import com.imsouane.aftas.service.impl.RankingServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +14,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RankingController {
     private final RankingServiceImpl rankingService;
+
+    @PostMapping
+    public ResponseEntity<RankingResponseDto> registerMember(@RequestBody RegistrationRequestDto registrationRequestDto) {
+        return ResponseEntity.ok(RankingResponseDto.fromRanking(rankingService.registerMember(RegistrationRequestDto.toRanking(registrationRequestDto))));
+    }
+
 
     @GetMapping("/competitions/{code}")
     public ResponseEntity<List<RankingResponseDto>> findByCompetitionCode(@PathVariable String code) {
