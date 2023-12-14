@@ -35,6 +35,15 @@ public class ControllerExceptionHandler {
         return ResponseEntity.badRequest().body(errors);
     }
 
+    @ExceptionHandler(HuntCreationException.class)
+    public ResponseEntity<ErrorMessage> handleHuntCreationException(HuntCreationException e) {
+        ErrorMessage errorMessage = new ErrorMessage(
+                LocalDateTime.now(),
+                e.getMessage()
+        );
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(DateTimeParseException.class)
     public ResponseEntity<ErrorMessage> handleDateTimeParseException(DateTimeParseException e) {
         ErrorMessage errorMessage = new ErrorMessage(
