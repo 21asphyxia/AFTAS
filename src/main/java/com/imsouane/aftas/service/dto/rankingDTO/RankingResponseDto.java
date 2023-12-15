@@ -7,7 +7,6 @@ import java.util.List;
 
 @Builder
 public record RankingResponseDto(
-        String competition_code,
         Integer member_number,
         String member_fullName,
         Integer rank,
@@ -16,7 +15,6 @@ public record RankingResponseDto(
 ) {
     public static RankingResponseDto fromRanking(Ranking ranking) {
         return RankingResponseDto.builder()
-                .competition_code(ranking.getCompetition().getCode())
                 .member_number(ranking.getMember().getNum())
                 .member_fullName(ranking.getMember().getName() + " " + ranking.getMember().getFamilyName())
                 .rank(ranking.getRank())

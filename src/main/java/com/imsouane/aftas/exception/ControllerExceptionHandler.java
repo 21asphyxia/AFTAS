@@ -15,7 +15,7 @@ import java.util.Map;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
-    @ExceptionHandler({CompetitionCreationException.class,})
+    @ExceptionHandler({CompetitionCreationException.class,HuntCreationException.class,RankingCreationException.class})
     public ResponseEntity<ErrorMessage> handleCompetitionCreationException(CompetitionCreationException e) {
         ErrorMessage errorMessage = new ErrorMessage(
                 LocalDateTime.now(),
@@ -24,13 +24,13 @@ public class ControllerExceptionHandler {
         return ResponseEntity.badRequest().body(errorMessage);
     }
 
-    @ExceptionHandler(HuntCreationException.class)
-    public ResponseEntity<ErrorMessage> handleHuntCreationException(HuntCreationException e) {
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorMessage> handleException(Exception e, WebRequest request) {
         ErrorMessage errorMessage = new ErrorMessage(
                 LocalDateTime.now(),
                 e.getMessage()
         );
-        return ResponseEntity.badRequest().body(errorMessage);
+        return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(DateTimeParseException.class)
@@ -60,14 +60,5 @@ public class ControllerExceptionHandler {
                 e.getMessage()
         );
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorMessage> handleException(Exception e, WebRequest request) {
-        ErrorMessage errorMessage = new ErrorMessage(
-                LocalDateTime.now(),
-                e.getMessage()
-        );
-        return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

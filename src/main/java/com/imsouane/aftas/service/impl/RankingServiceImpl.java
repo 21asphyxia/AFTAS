@@ -4,6 +4,7 @@ import com.imsouane.aftas.domain.entities.Competition;
 import com.imsouane.aftas.domain.entities.Fish;
 import com.imsouane.aftas.domain.entities.Member;
 import com.imsouane.aftas.domain.entities.Ranking;
+import com.imsouane.aftas.exception.RankingCreationException;
 import com.imsouane.aftas.repository.RankingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,11 +26,14 @@ public class RankingServiceImpl {
     public Ranking registerMember(Ranking ranking) {
         Competition competition = competitionService.findByCode(ranking.getCompetition().getCode());
         Member member = memberService.findByNum(ranking.getMember().getNum());
+        if (competition.getNumberOfParticipants() <= getCurrentNumberOfParticipants(competition.getCode())) {
+            throw new RankingCreationException("Competition is full");
+        }
         if (rankingRepository.existsByCompetitionCodeAndMemberNum(competition.getCode(), member.getNum())) {
-            throw new RuntimeException("Member already registered in this competition");
+            throw new RankingCreationException("Member already registered in this competition");
         }
         if (LocalDateTime.of(competition.getDate(), competition.getStartTime()).minusHours(24).isBefore(LocalDateTime.now())) {
-            throw new RuntimeException("Registration is closed");
+            throw new RankingCreationException("Registration is closed");
         }
         ranking.setMember(member);
         ranking.setCompetition(competition);
@@ -37,12 +41,24 @@ public class RankingServiceImpl {
     }
 
     public void updateRankingScoreAndRank(Member member, Competition competition, Fish fish) {
-        Ranking ranking = rankingRepository.findByCompetitionCodeAndMemberNum(competition.getCode(), member.getNum()).orElseThrow(() -> new RuntimeException("Member not registered in this competition"));
-        ranking.setScore(ranking.getScore() + fish.getLevel().getPoints());\
-
+        Ranking ranking = rankingRepository.findByCompetitionCodeAndMemberNum(competition.getCode(), member.getNum()).orElseThrow(() -> new RankingCreationException("Member not registered in this competition"));
+        ranking.setScore(ranking.getScore() + fish.getLevel().getPoints());
+        rankingRepository.save(ranking);
+        List<Ranking> rankings = rankingRepository.findByCompetitionCodeOrderByScoreDesc(competition.getCode());
+        rankings.forEach(r -> r.setRank(rankings.indexOf(r) + 1));
+        rankingRepository.saveAll(rankings);
     }
 
     public Integer getCurrentNumberOfParticipants(String code) {
         return rankingRepository.findByCompetitionCode(code).size();
+    }
+
+    public List<Ranking> findPodiumByCompetitionCode(String code) {
+        List<Ranking> rankings = rankingRepository.findTop3ByCompetitionCodeOrderByScoreDesc(code);
+        if (rankings.isEmpty()) {
+            throw new RankingCreationException("No podium found");
+        } else {
+            return rankings;
+        }
     }
 }

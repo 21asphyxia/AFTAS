@@ -24,8 +24,8 @@ public class CompetitionController {
     }
 
     @GetMapping
-    public Iterable<CompetitionResponseDto> findAll(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size) {
-        return CompetitionResponseDto.fromCompetitions(competitionService.findAll(PageRequest.of(page, size)));
+    public ResponseEntity<Iterable<CompetitionResponseDto>> findAll(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size) {
+        return ResponseEntity.ok(CompetitionResponseDto.fromCompetitions(competitionService.findAll(PageRequest.of(page, size))));
     }
 
     @GetMapping("/{code}")

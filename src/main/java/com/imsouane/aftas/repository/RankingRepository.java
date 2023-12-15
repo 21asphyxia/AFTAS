@@ -13,4 +13,8 @@ public interface RankingRepository extends JpaRepository<Ranking, RankId> {
     Optional<Ranking> findByCompetitionCodeAndMemberNum(String code, Integer num);
 
     Boolean existsByCompetitionCodeAndMemberNum(String code, Integer num);
+
+    List<Ranking> findTop3ByCompetitionCodeOrderByScoreDesc(String code);
+
+    List<Ranking> findByCompetitionCodeOrderByScoreDesc(String code);
 }

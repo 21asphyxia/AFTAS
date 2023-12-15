@@ -18,6 +18,7 @@ public class HuntServiceImpl {
     private final FishServiceImpl fishService;
     private final CompetitionServiceImpl competitionService;
     private final MemberServiceImpl memberService;
+    private final RankingServiceImpl rankingService;
 
     public Hunt save(Hunt hunt, Double weight) {
         Fish fish = fishService.findById(hunt.getFish().getId());
@@ -38,6 +39,7 @@ public class HuntServiceImpl {
             } else {
                 hunt1.setNumberOfFish(hunt1.getNumberOfFish() + 1);
             }
+            rankingService.updateRankingScoreAndRank(member, competition, fish);
             return huntRepository.save(hunt1);
         } else {
             throw new HuntCreationException("Weight is less than average weight");
