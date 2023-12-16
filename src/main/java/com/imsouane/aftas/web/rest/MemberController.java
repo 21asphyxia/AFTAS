@@ -1,7 +1,7 @@
 package com.imsouane.aftas.web.rest;
 
 import com.imsouane.aftas.dto.memberDTO.MemberResponseDto;
-import com.imsouane.aftas.service.impl.MemberServiceImpl;
+import com.imsouane.aftas.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/members")
 public class MemberController {
-    private final MemberServiceImpl memberService;
+    private final MemberService memberService;
 
     @GetMapping
     public ResponseEntity<Iterable<MemberResponseDto>> findAll(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size) {

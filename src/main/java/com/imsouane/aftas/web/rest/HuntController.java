@@ -3,7 +3,7 @@ package com.imsouane.aftas.web.rest;
 import com.imsouane.aftas.domain.entities.Hunt;
 import com.imsouane.aftas.dto.huntDTO.HuntCreationRequestDto;
 import com.imsouane.aftas.dto.huntDTO.HuntResponseDto;
-import com.imsouane.aftas.service.impl.HuntServiceImpl;
+import com.imsouane.aftas.service.HuntService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/hunts")
 public class HuntController {
-    private final HuntServiceImpl huntService;
+    private final HuntService huntService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

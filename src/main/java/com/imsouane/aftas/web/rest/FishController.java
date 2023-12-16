@@ -3,7 +3,7 @@ package com.imsouane.aftas.web.rest;
 import com.imsouane.aftas.domain.entities.Fish;
 import com.imsouane.aftas.dto.fishDTO.FishCreationRequestDto;
 import com.imsouane.aftas.dto.fishDTO.FishResponseDto;
-import com.imsouane.aftas.service.impl.FishServiceImpl;
+import com.imsouane.aftas.service.FishService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/v1/fishes")
 public class FishController {
 
-    private final FishServiceImpl fishService;
+    private final FishService fishService;
 
     @PostMapping
     public ResponseEntity<FishResponseDto> save(@RequestBody @Valid FishCreationRequestDto fish) {

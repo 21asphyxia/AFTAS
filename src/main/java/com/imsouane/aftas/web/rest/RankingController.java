@@ -3,7 +3,7 @@ package com.imsouane.aftas.web.rest;
 import com.imsouane.aftas.dto.competitionDTO.CompetitionRankingsResponseDto;
 import com.imsouane.aftas.dto.rankingDTO.RankingResponseDto;
 import com.imsouane.aftas.dto.rankingDTO.RegistrationRequestDto;
-import com.imsouane.aftas.service.impl.RankingServiceImpl;
+import com.imsouane.aftas.service.RankingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/rankings")
 @RequiredArgsConstructor
 public class RankingController {
-    private final RankingServiceImpl rankingService;
+    private final RankingService rankingService;
 
     @PostMapping
     public ResponseEntity<RankingResponseDto> registerMember(@RequestBody @Valid RegistrationRequestDto registrationRequestDto) {

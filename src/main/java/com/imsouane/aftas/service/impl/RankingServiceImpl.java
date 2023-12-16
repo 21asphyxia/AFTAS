@@ -7,6 +7,9 @@ import com.imsouane.aftas.domain.entities.Ranking;
 import com.imsouane.aftas.domain.entities.embeddable.RankId;
 import com.imsouane.aftas.exception.RankingCreationException;
 import com.imsouane.aftas.repository.RankingRepository;
+import com.imsouane.aftas.service.CompetitionService;
+import com.imsouane.aftas.service.MemberService;
+import com.imsouane.aftas.service.RankingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,20 +18,23 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class RankingServiceImpl {
+public class RankingServiceImpl implements RankingService {
     private final RankingRepository rankingRepository;
-    private final CompetitionServiceImpl competitionService;
-    private final MemberServiceImpl memberService;
+    private final CompetitionService competitionService;
+    private final MemberService memberService;
 
+    @Override
     public List<Ranking> findByCompetitionCode(String code) {
         return rankingRepository.findByCompetitionCode(code);
     }
 
+    @Override
     public List<Ranking> findByCompetition(String code) {
         Competition competition = competitionService.findByCode(code);
         return rankingRepository.findByCompetitionOrderByScoreDesc(competition);
     }
 
+    @Override
     public Ranking registerMember(Ranking ranking) {
         Competition competition = competitionService.findByCode(ranking.getCompetition().getCode());
         Member member = memberService.findByNum(ranking.getMember().getNum());
@@ -49,6 +55,7 @@ public class RankingServiceImpl {
         return rankingRepository.save(ranking);
     }
 
+    @Override
     public void updateRankingScoreAndRank(Member member, Competition competition, Fish fish) {
         Ranking ranking = rankingRepository.findByCompetitionCodeAndMemberNum(competition.getCode(), member.getNum()).orElseThrow(() -> new RankingCreationException("Member not registered in this competition"));
         ranking.setScore(ranking.getScore() + fish.getLevel().getPoints());
@@ -58,10 +65,12 @@ public class RankingServiceImpl {
         rankingRepository.saveAll(rankings);
     }
 
+    @Override
     public Integer getCurrentNumberOfParticipants(String code) {
         return rankingRepository.countByCompetitionCode(code);
     }
 
+    @Override
     public List<Ranking> findPodiumByCompetitionCode(String code) {
         List<Ranking> rankings = rankingRepository.findTop3ByCompetitionCodeOrderByScoreDesc(code);
         if (rankings.isEmpty()) {

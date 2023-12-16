@@ -3,7 +3,7 @@ package com.imsouane.aftas.web.rest;
 import com.imsouane.aftas.domain.entities.Competition;
 import com.imsouane.aftas.dto.competitionDTO.CompetitionCreationRequestDto;
 import com.imsouane.aftas.dto.competitionDTO.CompetitionResponseDto;
-import com.imsouane.aftas.service.impl.CompetitionServiceImpl;
+import com.imsouane.aftas.service.CompetitionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/competitions")
 public class CompetitionController {
 
-    private final CompetitionServiceImpl competitionService;
+    private final CompetitionService competitionService;
 
     @PostMapping
     public ResponseEntity<CompetitionResponseDto> save(@RequestBody @Valid CompetitionCreationRequestDto competition) {

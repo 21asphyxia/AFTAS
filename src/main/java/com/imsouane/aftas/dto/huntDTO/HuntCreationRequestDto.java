@@ -7,7 +7,7 @@ import com.imsouane.aftas.domain.entities.Member;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record HuntCreationRequestDto (
+public record HuntCreationRequestDto(
         @NotBlank(message = "Competition code is mandatory")
         String competition_code,
         @NotNull(message = "Fish ID is mandatory")

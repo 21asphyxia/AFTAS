@@ -6,6 +6,7 @@ import com.imsouane.aftas.domain.entities.Hunt;
 import com.imsouane.aftas.domain.entities.Member;
 import com.imsouane.aftas.exception.HuntCreationException;
 import com.imsouane.aftas.repository.HuntRepository;
+import com.imsouane.aftas.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +14,14 @@ import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
-public class HuntServiceImpl {
+public class HuntServiceImpl implements HuntService {
     private final HuntRepository huntRepository;
-    private final FishServiceImpl fishService;
-    private final CompetitionServiceImpl competitionService;
-    private final MemberServiceImpl memberService;
-    private final RankingServiceImpl rankingService;
+    private final FishService fishService;
+    private final CompetitionService competitionService;
+    private final MemberService memberService;
+    private final RankingService rankingService;
 
+    @Override
     public Hunt save(Hunt hunt, Double weight) {
         Fish fish = fishService.findById(hunt.getFish().getId());
         Member member = memberService.findByNum(hunt.getMember().getNum());
@@ -46,6 +48,7 @@ public class HuntServiceImpl {
         }
     }
 
+    @Override
     public Hunt findById(Long id) {
         return huntRepository.findById(id).orElseThrow(() -> new HuntCreationException("Hunt not found"));
     }
