@@ -22,7 +22,7 @@ public class HuntServiceImpl {
 
     public Hunt save(Hunt hunt, Double weight) {
         Fish fish = fishService.findById(hunt.getFish().getId());
-        Member member = memberService.findById(hunt.getMember().getId());
+        Member member = memberService.findByNum(hunt.getMember().getNum());
         Competition competition = competitionService.findByCode(hunt.getCompetition().getCode());
         if (competition.getDate().isEqual(LocalDate.now())) {
             throw new HuntCreationException("Hunts can only be registered on the day of the competition");

@@ -1,8 +1,8 @@
 package com.imsouane.aftas.web.rest;
 
 import com.imsouane.aftas.domain.entities.Competition;
-import com.imsouane.aftas.service.dto.competitionDTO.CompetitionCreationRequestDto;
-import com.imsouane.aftas.service.dto.competitionDTO.CompetitionResponseDto;
+import com.imsouane.aftas.dto.competitionDTO.CompetitionCreationRequestDto;
+import com.imsouane.aftas.dto.competitionDTO.CompetitionResponseDto;
 import com.imsouane.aftas.service.impl.CompetitionServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

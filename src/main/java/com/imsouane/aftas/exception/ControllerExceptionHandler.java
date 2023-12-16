@@ -16,7 +16,7 @@ import java.util.Map;
 @ControllerAdvice
 public class ControllerExceptionHandler {
     @ExceptionHandler({CompetitionCreationException.class,HuntCreationException.class,RankingCreationException.class})
-    public ResponseEntity<ErrorMessage> handleCompetitionCreationException(CompetitionCreationException e) {
+    public ResponseEntity<ErrorMessage> handleCreationException(Exception e) {
         ErrorMessage errorMessage = new ErrorMessage(
                 LocalDateTime.now(),
                 e.getMessage()

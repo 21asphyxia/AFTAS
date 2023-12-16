@@ -1,12 +1,14 @@
-package com.imsouane.aftas.service.dto.rankingDTO;
+package com.imsouane.aftas.dto.rankingDTO;
 
 import com.imsouane.aftas.domain.entities.Competition;
 import com.imsouane.aftas.domain.entities.Member;
 import com.imsouane.aftas.domain.entities.Ranking;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record RegistrationRequestDto(
-        String competitionCode,
-        Integer memberNum
+        @NotBlank String competitionCode,
+        @NotNull Integer memberNum
 ) {
     public static Ranking toRanking(RegistrationRequestDto registrationRequestDto) {
         return Ranking.builder()

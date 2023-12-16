@@ -1,4 +1,4 @@
-package com.imsouane.aftas.service.dto.rankingDTO;
+package com.imsouane.aftas.dto.rankingDTO;
 
 import com.imsouane.aftas.domain.entities.Ranking;
 import lombok.Builder;

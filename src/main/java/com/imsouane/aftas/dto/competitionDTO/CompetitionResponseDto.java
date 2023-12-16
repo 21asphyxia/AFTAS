@@ -1,4 +1,4 @@
-package com.imsouane.aftas.service.dto.competitionDTO;
+package com.imsouane.aftas.dto.competitionDTO;
 
 import com.imsouane.aftas.domain.entities.Competition;
 import lombok.Builder;

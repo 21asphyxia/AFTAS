@@ -1,4 +1,4 @@
-package com.imsouane.aftas.service.dto.huntDTO;
+package com.imsouane.aftas.dto.huntDTO;
 
 import com.imsouane.aftas.domain.entities.Competition;
 import com.imsouane.aftas.domain.entities.Fish;
@@ -13,7 +13,7 @@ public record HuntCreationRequestDto (
         @NotNull(message = "Fish ID is mandatory")
         Long fishId,
         @NotNull(message = "Member ID is mandatory")
-        Long memberId,
+        Integer memberNum,
         @NotNull(message = "Weight is mandatory")
         Double weight) {
 
@@ -21,7 +21,7 @@ public record HuntCreationRequestDto (
         return Hunt.builder()
                 .competition(Competition.builder().code(huntCreationRequestDto.competition_code()).build())
                 .fish(Fish.builder().id(huntCreationRequestDto.fishId()).build())
-                .member(Member.builder().id(huntCreationRequestDto.memberId()).build())
+                .member(Member.builder().num(huntCreationRequestDto.memberNum()).build())
                 .build();
     }
 }

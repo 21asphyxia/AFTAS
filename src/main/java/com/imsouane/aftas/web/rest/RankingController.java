@@ -1,9 +1,10 @@
 package com.imsouane.aftas.web.rest;
 
-import com.imsouane.aftas.service.dto.competitionDTO.CompetitionRankingsResponseDto;
-import com.imsouane.aftas.service.dto.rankingDTO.RankingResponseDto;
-import com.imsouane.aftas.service.dto.rankingDTO.RegistrationRequestDto;
+import com.imsouane.aftas.dto.competitionDTO.CompetitionRankingsResponseDto;
+import com.imsouane.aftas.dto.rankingDTO.RankingResponseDto;
+import com.imsouane.aftas.dto.rankingDTO.RegistrationRequestDto;
 import com.imsouane.aftas.service.impl.RankingServiceImpl;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +16,14 @@ public class RankingController {
     private final RankingServiceImpl rankingService;
 
     @PostMapping
-    public ResponseEntity<RankingResponseDto> registerMember(@RequestBody RegistrationRequestDto registrationRequestDto) {
+    public ResponseEntity<RankingResponseDto> registerMember(@RequestBody @Valid RegistrationRequestDto registrationRequestDto) {
         return ResponseEntity.ok(RankingResponseDto.fromRanking(rankingService.registerMember(RegistrationRequestDto.toRanking(registrationRequestDto))));
     }
 
 
     @GetMapping("/competitions/{code}")
     public ResponseEntity<CompetitionRankingsResponseDto> findByCompetitionCode(@PathVariable String code) {
-        return ResponseEntity.ok(CompetitionRankingsResponseDto.fromCompetitionAndRankings(code, RankingResponseDto.fromRankings(rankingService.findByCompetitionCode(code))));
+        return ResponseEntity.ok(CompetitionRankingsResponseDto.fromCompetitionAndRankings(code, RankingResponseDto.fromRankings(rankingService.findByCompetition(code))));
     }
 
     @GetMapping("/competitions/{code}/podium")

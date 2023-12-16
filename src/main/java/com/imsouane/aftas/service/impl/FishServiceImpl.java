@@ -6,6 +6,8 @@ import com.imsouane.aftas.repository.FishRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class FishServiceImpl {
@@ -27,5 +29,9 @@ public class FishServiceImpl {
 
     public void delete(Fish entity) {
         fishRepository.delete(entity);
+    }
+
+    public List<Fish> findAll() {
+        return fishRepository.findAll();
     }
 }

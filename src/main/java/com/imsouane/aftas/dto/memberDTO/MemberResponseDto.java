@@ -1,4 +1,4 @@
-package com.imsouane.aftas.service.dto.memberDTO;
+package com.imsouane.aftas.dto.memberDTO;
 
 import com.imsouane.aftas.domain.entities.Member;
 import lombok.Builder;

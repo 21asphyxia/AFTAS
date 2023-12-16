@@ -4,12 +4,10 @@ import com.imsouane.aftas.domain.entities.Member;
 import com.imsouane.aftas.exception.ResourceNotFoundException;
 import com.imsouane.aftas.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,5 +32,9 @@ public class MemberServiceImpl {
 
     public List<Member> findAll(Pageable pageable) {
         return memberRepository.findAll(pageable).getContent();
+    }
+
+    public List<Member> search(String query) {
+        return memberRepository.findByMembershipNumberOrNameOrFamilyName(query);
     }
 }

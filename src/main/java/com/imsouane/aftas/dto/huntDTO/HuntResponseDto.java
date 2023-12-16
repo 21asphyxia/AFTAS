@@ -1,4 +1,4 @@
-package com.imsouane.aftas.service.dto.huntDTO;
+package com.imsouane.aftas.dto.huntDTO;
 
 import com.imsouane.aftas.domain.entities.Hunt;
 import lombok.Builder;
@@ -18,7 +18,7 @@ public record HuntResponseDto(Long id,
                 .competition_code(hunt.getCompetition().getCode())
                 .fish_name(hunt.getFish().getName())
                 .fish_averageWeight(hunt.getFish().getAverageWeight())
-                .numberOfFish(hunt.getCompetition().getNumberOfParticipants())
+                .numberOfFish(hunt.getNumberOfFish())
                 .member_number(hunt.getMember().getNum())
                 .member_name(hunt.getMember().getName())
                 .build();

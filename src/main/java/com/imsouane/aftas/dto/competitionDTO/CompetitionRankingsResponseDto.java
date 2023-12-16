@@ -1,6 +1,6 @@
-package com.imsouane.aftas.service.dto.competitionDTO;
+package com.imsouane.aftas.dto.competitionDTO;
 
-import com.imsouane.aftas.service.dto.rankingDTO.RankingResponseDto;
+import com.imsouane.aftas.dto.rankingDTO.RankingResponseDto;
 import lombok.Builder;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.imsouane.aftas.service.dto.fishDTO;
+package com.imsouane.aftas.dto.fishDTO;
 
 import com.imsouane.aftas.domain.entities.Fish;
 import com.imsouane.aftas.domain.entities.Level;
