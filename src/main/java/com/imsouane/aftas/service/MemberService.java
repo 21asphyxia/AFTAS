@@ -14,7 +14,7 @@ public interface MemberService {
 
     void deleteById(Long id);
 
-    List<Member> findAll(Pageable pageable);
+    List<Member> findAll();
 
     List<Member> search(String query);
 }

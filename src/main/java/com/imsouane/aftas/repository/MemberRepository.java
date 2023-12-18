@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query(value =
-            "SELECT * FROM member WHERE CAST(num AS TEXT) = :searchTerm OR name LIKE %:searchTerm% OR family_name LIKE %:searchTerm%", nativeQuery = true)
+            "SELECT * FROM member WHERE CAST(num AS TEXT) = :searchTerm OR name ILIKE %:searchTerm% OR family_name ILIKE %:searchTerm%", nativeQuery = true)
     List<Member> findByMembershipNumberOrNameOrFamilyName(@Param("searchTerm") String searchTerm);
 
     Optional<Member> findByNum(Integer num);

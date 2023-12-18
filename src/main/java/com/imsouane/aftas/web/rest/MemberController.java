@@ -1,14 +1,13 @@
 package com.imsouane.aftas.web.rest;
 
+import com.imsouane.aftas.dto.memberDTO.MemberCreationRequestDto;
 import com.imsouane.aftas.dto.memberDTO.MemberResponseDto;
 import com.imsouane.aftas.service.MemberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,9 +17,14 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
 
+    @PostMapping
+    public ResponseEntity<MemberResponseDto> save(@RequestBody @Valid MemberCreationRequestDto member) {
+        return ResponseEntity.ok(MemberResponseDto.fromMember(memberService.save(MemberCreationRequestDto.toMember(member))));
+    }
+
     @GetMapping
-    public ResponseEntity<Iterable<MemberResponseDto>> findAll(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size) {
-        return ResponseEntity.ok(MemberResponseDto.fromMembers(memberService.findAll(PageRequest.of(page, size))));
+    public ResponseEntity<Iterable<MemberResponseDto>> findAll() {
+        return ResponseEntity.ok(MemberResponseDto.fromMembers(memberService.findAll()));
     }
 
     @GetMapping("/search")

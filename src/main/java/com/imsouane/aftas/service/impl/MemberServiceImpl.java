@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -17,6 +18,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member save(Member entity) {
+        entity.setAccessionDate(LocalDate.now());
         return memberRepository.save(entity);
     }
 
@@ -36,8 +38,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<Member> findAll(Pageable pageable) {
-        return memberRepository.findAll(pageable).getContent();
+    public List<Member> findAll() {
+        return memberRepository.findAll();
     }
 
     @Override

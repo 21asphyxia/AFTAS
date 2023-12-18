@@ -28,6 +28,11 @@ public class CompetitionController {
         return ResponseEntity.ok(CompetitionResponseDto.fromCompetitions(competitionService.findAll(PageRequest.of(page, size))));
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> count() {
+        return ResponseEntity.ok(competitionService.count());
+    }
+
     @GetMapping("/{code}")
     public ResponseEntity<CompetitionResponseDto> findByCode(@PathVariable String code) {
         return ResponseEntity.ok(CompetitionResponseDto.fromCompetition(competitionService.findByCode(code)));

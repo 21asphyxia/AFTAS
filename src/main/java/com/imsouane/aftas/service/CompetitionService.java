@@ -14,4 +14,6 @@ public interface CompetitionService {
     Competition findByCode(String code);
 
     void delete(Competition competition);
+
+    Long count();
 }

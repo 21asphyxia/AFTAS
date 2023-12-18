@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record RegistrationRequestDto(
         @NotBlank String competitionCode,
-        @NotNull Integer memberNum
+            @NotNull Integer memberNum
 ) {
     public static Ranking toRanking(RegistrationRequestDto registrationRequestDto) {
         return Ranking.builder()

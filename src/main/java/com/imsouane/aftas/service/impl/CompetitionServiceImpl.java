@@ -40,6 +40,10 @@ public class CompetitionServiceImpl implements CompetitionService {
     public void delete(Competition competition) {
         competitionRepository.delete(competition);
     }
+    @Override
+    public Long count() {
+        return competitionRepository.count();
+    }
 
     private String generateCode(String location, LocalDate date) {
         return location.substring(0, 3) + "-" + (date.getDayOfMonth() > 9 ? date.getDayOfMonth() : "0" + date.getDayOfMonth()) + "-" + (date.getMonthValue() > 9 ? date.getMonthValue() : "0" + date.getMonthValue()) + "-" + String.valueOf(date.getYear()).substring(2);
