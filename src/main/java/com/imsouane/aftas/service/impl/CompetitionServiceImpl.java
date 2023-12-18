@@ -5,7 +5,6 @@ import com.imsouane.aftas.exception.CompetitionCreationException;
 import com.imsouane.aftas.exception.ResourceNotFoundException;
 import com.imsouane.aftas.repository.CompetitionRepository;
 import com.imsouane.aftas.service.CompetitionService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ public class CompetitionServiceImpl implements CompetitionService {
     }
 
     @Override
-    public Competition save(@Valid Competition competition) {
+    public Competition save(Competition competition) {
         competitionRepository.findByDate(competition.getDate()).ifPresent((c) -> {
             throw new CompetitionCreationException("Competition already exists with date: " + competition.getDate());
         });
@@ -43,6 +42,6 @@ public class CompetitionServiceImpl implements CompetitionService {
     }
 
     private String generateCode(String location, LocalDate date) {
-        return location.substring(0, 3) + "-" + date.getDayOfMonth() + "-" + date.getMonthValue() + "-" + String.valueOf(date.getYear()).substring(2);
+        return location.substring(0, 3) + "-" + (date.getDayOfMonth() > 9 ? date.getDayOfMonth() : "0" + date.getDayOfMonth()) + "-" + (date.getMonthValue() > 9 ? date.getMonthValue() : "0" + date.getMonthValue()) + "-" + String.valueOf(date.getYear()).substring(2);
     }
 }

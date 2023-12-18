@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public record CompetitionCreationRequestDto(
-        @NotNull @JsonFormat(pattern = "dd-MM-yyyy") @Future(message = "Date must be in the future") LocalDate date,
+        @NotNull @JsonFormat(pattern = "yyyy-MM-dd") @Future(message = "Date must be in the future") LocalDate date,
         @NotNull LocalTime startTime, @NotNull LocalTime endTime,
         @NotNull @Min(value = 2, message = "Number of participants must be at least 2") Integer numberOfParticipants,
         @NotBlank String location) {
